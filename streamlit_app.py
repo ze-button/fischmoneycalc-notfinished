@@ -51,7 +51,7 @@ if passive_spec == "Dead Man's Rod":
         lure_speed = max(0,1-(lure_spd/100))
     
         avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)
+        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
         avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
     
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
@@ -77,7 +77,7 @@ if passive_spec == "Ruinous":
         lure_speed = max(0,1-(lure_spd/100))
     
         avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)
+        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
         avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
     
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
@@ -110,7 +110,7 @@ if passive_spec == "Onirifalx":
         lure_speed = max(0,1-(lure_spd/100))
     
         avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)
+        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
         avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
     
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
@@ -135,7 +135,7 @@ if passive_spec == "None":
         lure_speed = max(0,1-(lure_spd/100))
     
         avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)
+        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
         avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
     
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
