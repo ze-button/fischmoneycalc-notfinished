@@ -133,7 +133,9 @@ if passive_spec == "None":
         time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
+        avg_fish_val = avg_f_val*val_mult
         st.divider()
         st.metric(f"Total Money made with {rod_name}:" , f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
+        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}s")
