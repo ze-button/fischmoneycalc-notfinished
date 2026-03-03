@@ -89,6 +89,7 @@ if passive_spec == "Ruinous":
         positive_solutions = [float(sol) for sol in solutions if sol > 0]
         
         time_to_catch = positive_solutions[0] + 1.2 + 1 + lure_speed
+        testtt = positive_solutions[0]
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
@@ -97,6 +98,7 @@ if passive_spec == "Ruinous":
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
+        st.write(f"**test:** {testtt:.2f}")
 
 
 
