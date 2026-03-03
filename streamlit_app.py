@@ -15,7 +15,7 @@ with st.sidebar:
     shin_ch = st.number_input("Shiny Chance %", value=0)
     lure_spd = st.number_input("Lure Speed", value=0)
     passive_spec = st.selectbox(
-    "Rod Passive",
+    "Rod Passive (WIP)",
     options=["None", "Ruinous", "Luminescent", "Ruinous", "Onirifalx"]
 )
 
