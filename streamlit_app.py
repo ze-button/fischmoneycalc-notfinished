@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
 st.title("Fisch Moneymaking Calc")
-st.write("Calculate how much you can theoretically make in a set amount of time. Heh")
+st.write("Calculate how much you can theoretically make in a set amount of time.")
 
 # inputs
 with st.sidebar:
