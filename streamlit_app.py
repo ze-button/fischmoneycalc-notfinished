@@ -42,7 +42,7 @@ with col2:
         m_data.append((m_ch, m_val))
         
 #mathforruinous
-if passive_spec == "Onirifalx":
+if passive_spec == "Ruinous":
     if st.button("RUN CALCULATOR", type="primary"):
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
