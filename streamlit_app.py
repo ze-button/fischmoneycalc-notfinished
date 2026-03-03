@@ -5,7 +5,7 @@ st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 st.title("Fisch Moneymaking Calc")
 st.write("Calculate how much you can theoretically make in a set amount of time.")
 
-# --- Inputs ---
+# inputs
 with st.sidebar:
     st.header("General Settings")
     rod_name = st.text_input("Rod Name", "Flimsy Rod")
@@ -22,7 +22,7 @@ with col1:
     f_data = []
     for i in range(4):
         c = st.columns(3)
-        ch = c[0].number_input(f"Fish {i+1} %", value=0.0, key=f"fch{i}")
+        ch = c[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%0.2f%%", key=f"fch{i}")
         val = c[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
         spd = c[2].number_input(f"Fish {i+1} PrgSpd", value=0.0, key=f"fspd{i}")
         f_data.append((ch, val, spd))
@@ -30,13 +30,13 @@ with col1:
 with col2:
     st.subheader("Mutations")
     m_data = []
-    for i in range(5): # Simplified to 5 for the web view
+    for i in range(5):
         c = st.columns(2)
-        m_ch = c[0].number_input(f"Mut {i+1} %", value=0.0, key=f"mch{i}")
+        m_ch = c[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%0.2f%%", key=f"mch{i}")
         m_val = c[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
         m_data.append((m_ch, m_val))
 
-# --- Math ---
+# math
 if st.button("RUN CALCULATOR", type="primary"):
     spark_m = (spark_ch * 0.85) + 1
     shiny_m = (shin_ch * 0.85) + 1
