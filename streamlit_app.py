@@ -24,7 +24,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("Fish Stats")
     f_data = []
-    for i in range(4):
+    for i in range(5):
         c = st.columns(3)
         ch = c[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"fch{i}")
         val = c[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
