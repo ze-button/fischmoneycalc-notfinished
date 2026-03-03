@@ -134,6 +134,6 @@ if passive_spec == "None":
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         st.divider()
-        st.metric("Total Money made with",{rod_name},":" , f"{total_money:,.0f} C$")
+        st.metric(f"Total Money made with {rod_name}:" , f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
