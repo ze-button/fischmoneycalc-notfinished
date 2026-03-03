@@ -53,7 +53,7 @@ if passive_spec == "Onirifalx":
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
         total_speed = rod_speed + avg_f_speed
     
-        time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((35/80*0.3)+0.7)) + 1.2 + 1 + lure_speed
+        time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((45/80*0.3)+0.7)) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         st.divider()
