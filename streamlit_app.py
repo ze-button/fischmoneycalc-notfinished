@@ -7,7 +7,7 @@ st.write("Calculate how much you can theoretically make in a set amount of time.
 
 # inputs
 with st.sidebar:
-    st.header("General Settings")
+    st.header("Specifications")
     rod_name = st.text_input("Rod Name", "Flimsy Rod")
     time_given = st.number_input("Time (seconds)", value=60)
     rod_speed = st.number_input("Rod Prog Speed", value=0.0)
@@ -15,6 +15,10 @@ with st.sidebar:
     spark_ch = st.number_input("Sparkling Chance (Decimal)", value=0.0)
     shin_ch = st.number_input("Shiny Chance (Decimal)", value=0.0)
     lure_spd = st.number_input("Lure Speed", value=0)
+    passive_spec = st.selectbox(
+    "Rod Passive",
+    options=["None", "Ruinous", "Luminescent", "Ruinous", "Onirifalx"]
+)
 
 col1, col2 = st.columns(2)
 
