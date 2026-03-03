@@ -65,7 +65,7 @@ if passive_spec == "Dead Man's Rod":
         st.metric("Total Money made with Dead Man's Rod", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}s")
+        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
 
         
@@ -96,7 +96,7 @@ if passive_spec == "Ruinous":
         st.metric("Total Money made with Ruinous Oath", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}s")
+        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
 
 
@@ -122,7 +122,7 @@ if passive_spec == "Onirifalx":
         st.metric("Total Money made with Onirifalx", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}s")
+        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
 
 # mathfornone
@@ -147,4 +147,4 @@ if passive_spec == "None":
         st.metric(f"Total Money made with {rod_name}:" , f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}s")
+        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
