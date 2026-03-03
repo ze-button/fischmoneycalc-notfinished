@@ -60,6 +60,7 @@ if passive_spec == "Dead Man's Rod":
         time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * (0.5) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
+        avg_fish_val = avg_f_val*val_mult
         st.divider()
         st.metric("Total Money made with Dead Man's Rod", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
@@ -90,6 +91,7 @@ if passive_spec == "Ruinous":
         time_to_catch = positive_solutions[0] + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
+        avg_fish_val = avg_f_val*val_mult
         st.divider()
         st.metric("Total Money made with Ruinous Oath", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
@@ -115,6 +117,7 @@ if passive_spec == "Onirifalx":
         time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((45/80*0.3)+0.7)) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
+        avg_fish_val = avg_f_val*val_mult
         st.divider()
         st.metric("Total Money made with Onirifalx", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
