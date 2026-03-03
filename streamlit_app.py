@@ -56,6 +56,10 @@ if passive_spec == "Onirifalx":
         time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((35/80*0.3)+0.7)) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
+        st.divider()
+        st.metric("Total Money", f"{total_money:,.0f} C$")
+        st.write(f"**Total Catches:** {catches:.1f}")
+        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
 
 # mathfornone
 if passive_spec == "None":
@@ -74,8 +78,7 @@ if passive_spec == "None":
         time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
-
-    st.divider()
-    st.metric("Total Money", f"{total_money:,.0f} C$")
-    st.write(f"**Total Catches:** {catches:.1f}")
-    st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
+        st.divider()
+        st.metric("Total Money", f"{total_money:,.0f} C$")
+        st.write(f"**Total Catches:** {catches:.1f}")
+        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
