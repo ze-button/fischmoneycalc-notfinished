@@ -5,6 +5,7 @@ st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
 st.title("Fisch Moneymaking Calc")
 st.write("Calculate how much you can theoretically make in a set amount of time.")
+st.write("by @ze_button on discord")
 
 # inputs
 with st.sidebar:
