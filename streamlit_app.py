@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
 st.title("Fisch Moneymaking Calc")
-st.write("Calculate how much you can theoretically make in a set amount of time.")
+st.write("Calculate how much you can theoretically make in a set amount of time. Heh")
 
 # inputs
 with st.sidebar:
@@ -22,7 +22,7 @@ with col1:
     f_data = []
     for i in range(4):
         c = st.columns(3)
-        ch = c[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%0.2f%%", key=f"fch{i}")
+        ch = c[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"fch{i}")
         val = c[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
         spd = c[2].number_input(f"Fish {i+1} PrgSpd", value=0.0, key=f"fspd{i}")
         f_data.append((ch, val, spd))
@@ -32,7 +32,7 @@ with col2:
     m_data = []
     for i in range(5):
         c = st.columns(2)
-        m_ch = c[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%0.2f%%", key=f"mch{i}")
+        m_ch = c[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"mch{i}")
         m_val = c[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
         m_data.append((m_ch, m_val))
 
