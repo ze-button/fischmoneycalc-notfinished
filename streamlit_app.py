@@ -39,23 +39,41 @@ with col2:
         m_ch = c[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"mch{i}")
         m_val = c[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
         m_data.append((m_ch, m_val))
+# mathforonirifalx
+if passive_spec == "Onirifalx":
+    if st.button("RUN CALCULATOR", type="primary"):
+        spark_m = (spark_ch * 0.85)/100 + 1
+        shiny_m = (shin_ch * 0.85)/100 + 1
+        lure_speed = max(0,1-(lure_spd/100))
+    
+        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
+        avg_f_speed = sum(f[0] * f[2] for f in f_data)
+        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
+    
+        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
+        total_speed = rod_speed + avg_f_speed
+    
+        time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((35/80*0.3)+0.7)) + 1.2 + 1 + lure_speed
+        catches = time_given / time_to_catch
+        total_money = (avg_f_val * val_mult) * catches
 
 # mathfornone
-if st.button("RUN CALCULATOR", type="primary"):
-    spark_m = (spark_ch * 0.85)/100 + 1
-    shiny_m = (shin_ch * 0.85)/100 + 1
-    lure_speed = max(0,1-(lure_spd/100))
+if passive_spec == "None":
+    if st.button("RUN CALCULATOR", type="primary"):
+        spark_m = (spark_ch * 0.85)/100 + 1
+        shiny_m = (shin_ch * 0.85)/100 + 1
+        lure_speed = max(0,1-(lure_spd/100))
     
-    avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-    avg_f_speed = sum(f[0] * f[2] for f in f_data)
-    avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
+        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
+        avg_f_speed = sum(f[0] * f[2] for f in f_data)
+        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
     
-    val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-    total_speed = rod_speed + avg_f_speed
+        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
+        total_speed = rod_speed + avg_f_speed
     
-    time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 1 + lure_speed
-    catches = time_given / time_to_catch
-    total_money = (avg_f_val * val_mult) * catches
+        time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 1 + lure_speed
+        catches = time_given / time_to_catch
+        total_money = (avg_f_val * val_mult) * catches
 
     st.divider()
     st.metric("Total Money", f"{total_money:,.0f} C$")
