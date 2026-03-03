@@ -9,11 +9,11 @@ st.write("Calculate how much you can theoretically make in a set amount of time.
 with st.sidebar:
     st.header("Specifications")
     rod_name = st.text_input("Rod Name", "Flimsy Rod")
-    time_given = st.number_input("Time (seconds)", value=60)
-    rod_speed = st.number_input("Rod Prog Speed", value=0.0)
+    time_given = st.number_input("Time (seconds)", value=750)
+    rod_speed = st.number_input("Rod Prog Speed", value=0)
     size_mult = st.number_input("Size Multiplier", value=1.0)
-    spark_ch = st.number_input("Sparkling Chance (Decimal)", value=0.0)
-    shin_ch = st.number_input("Shiny Chance (Decimal)", value=0.0)
+    spark_ch = st.number_input("Sparkling Chance %", value=0)
+    shin_ch = st.number_input("Shiny Chance %", value=0)
     lure_spd = st.number_input("Lure Speed", value=0)
     passive_spec = st.selectbox(
     "Rod Passive",
@@ -41,10 +41,10 @@ with col2:
         m_val = c[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
         m_data.append((m_ch, m_val))
 
-# math
+# mathfornone
 if st.button("RUN CALCULATOR", type="primary"):
-    spark_m = (spark_ch * 0.85) + 1
-    shiny_m = (shin_ch * 0.85) + 1
+    spark_m = (spark_ch * 0.85)/100 + 1
+    shiny_m = (shin_ch * 0.85)/100 + 1
     lure_speed = max(0,1-(lure_spd/100))
     
     avg_f_val = sum(f[0] * f[1] for f in f_data)/100
