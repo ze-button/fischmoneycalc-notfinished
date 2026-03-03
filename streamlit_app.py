@@ -14,6 +14,7 @@ with st.sidebar:
     size_mult = st.number_input("Size Multiplier", value=1.0)
     spark_ch = st.number_input("Sparkling Chance (Decimal)", value=0.0)
     shin_ch = st.number_input("Shiny Chance (Decimal)", value=0.0)
+    lure_spd = st.number_input("Lure Speed", value=0)
 
 col1, col2 = st.columns(2)
 
@@ -40,6 +41,7 @@ with col2:
 if st.button("RUN CALCULATOR", type="primary"):
     spark_m = (spark_ch * 0.85) + 1
     shiny_m = (shin_ch * 0.85) + 1
+    lure_speed = max(0,1-(lure_spd/100))
     
     avg_f_val = sum(f[0] * f[1] for f in f_data)
     avg_f_speed = sum(f[0] * f[2] for f in f_data)
@@ -48,7 +50,7 @@ if st.button("RUN CALCULATOR", type="primary"):
     val_mult = avg_mut_m * size_mult * shiny_m * spark_m
     total_speed = rod_speed + avg_f_speed
     
-    time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 0.5
+    time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 0.5 + lure_speed
     catches = time_given / time_to_catch
     total_money = (avg_f_val * val_mult) * catches
 
