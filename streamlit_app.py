@@ -16,7 +16,7 @@ with st.sidebar:
     lure_spd = st.number_input("Lure Speed", value=0)
     passive_spec = st.selectbox(
     "Rod Passive (WIP)",
-    options=["None", "Ruinous", "Luminescent", "Ruinous", "Onirifalx"]
+    options=["None", "Luminescent", "Ruinous", "Onirifalx"]
 )
 
 col1, col2 = st.columns(2)
