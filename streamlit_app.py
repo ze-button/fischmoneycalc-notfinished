@@ -5,7 +5,7 @@ st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
 st.title("Fisch Moneymaking Calc")
 st.write("Calculate how much you can theoretically make in a set amount of time.")
-st.write("by @ze_button on discord")
+st.markdown("by @ze_button on discord")
 
 # inputs
 with st.sidebar:
@@ -18,8 +18,9 @@ with st.sidebar:
     lure_spd = st.number_input("Lure Speed", value=0)
     passive_spec = st.selectbox(
     "Rod Passive (WIP)",
-    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx"]
-)
+    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx"])
+    if passive_spec == "None":
+        rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
 
