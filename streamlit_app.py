@@ -8,7 +8,6 @@ st.write("Calculate how much you can theoretically make in a set amount of time.
 # inputs
 with st.sidebar:
     st.header("Specifications")
-    rod_name = st.text_input("Rod Name", "Flimsy Rod")
     time_given = st.number_input("Time (seconds)", value=750)
     rod_speed = st.number_input("Rod Prog Speed", value=0)
     size_mult = st.number_input("Size Multiplier", value=1.0)
