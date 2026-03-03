@@ -85,7 +85,7 @@ if passive_spec == "Ruinous":
         solutions = sp.solve(f_x - x, x)
         positive_solutions = [float(sol) for sol in solutions if sol > 0]
         
-        time_to_catch = positive_solutions + 1.2 + 1 + lure_speed
+        time_to_catch = positive_solutions[0] + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         st.divider()
