@@ -12,8 +12,8 @@ with st.sidebar:
     time_given = st.number_input("Time (seconds)", value=60)
     rod_speed = st.number_input("Rod Prog Speed", value=0.0)
     size_mult = st.number_input("Size Multiplier", value=1.0)
-    spark_ch = st.number_input("Sparkling Chance", value=0.0)
-    shin_ch = st.number_input("Shiny Chance", value=0.0)
+    spark_ch = st.number_input("Sparkling Chance (Decimal)", value=0.0)
+    shin_ch = st.number_input("Shiny Chance (Decimal)", value=0.0)
 
 col1, col2 = st.columns(2)
 
