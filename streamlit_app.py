@@ -16,6 +16,8 @@ with st.sidebar:
     spark_ch = st.number_input("Sparkling Chance %", value=1)
     shin_ch = st.number_input("Shiny Chance %", value=1)
     lure_spd = st.number_input("Lure Speed", value=0)
+    fsh_count = st.number_input("Fisch Count", value=3)
+    mutt_count = st.number_input("Mutation Count", value=3)
     passive_spec = st.selectbox(
     "Rod Passive (WIP)",
     options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent"])
@@ -28,7 +30,7 @@ with col1:
     st.subheader("Fish Stats")
     st.caption("Make sure the chances add up to 100%")
     f_data = []
-    for i in range(5):
+    for i in range(fsh_count):
         c = st.columns(3)
         ch = c[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"fch{i}")
         val = c[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
@@ -39,7 +41,7 @@ with col2:
     st.subheader("Mutations")
     st.caption("Make sure the chances add up to 100%")
     m_data = []
-    for i in range(5):
+    for i in range(mutt_count):
         c = st.columns(2)
         m_ch = c[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"mch{i}")
         m_val = c[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
