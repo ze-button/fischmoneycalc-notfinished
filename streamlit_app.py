@@ -67,7 +67,7 @@ if passive_spec == "Wind Elemental":
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
         st.divider()
-        st.metric("Total Money made with Dead Man's Rod", f"{total_money:,.0f} C$")
+        st.metric("Total Money made with Wind Elemental", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
@@ -91,7 +91,7 @@ if passive_spec == "Seraphic":
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
         st.divider()
-        st.metric("Total Money made with Dead Man's Rod", f"{total_money:,.0f} C$")
+        st.metric("Total Money made with Seraphic Rod", f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
