@@ -92,7 +92,7 @@ if passive_spec == "Wind Elemental":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
@@ -138,7 +138,7 @@ if passive_spec == "Seraphic":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
@@ -185,7 +185,7 @@ if passive_spec == "Luminescent":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
         
@@ -232,7 +232,7 @@ if passive_spec == "Dead Man's Rod":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
@@ -286,7 +286,7 @@ if passive_spec == "Ruinous":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
@@ -334,7 +334,7 @@ if passive_spec == "Onirifalx":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
@@ -380,6 +380,6 @@ if passive_spec == "None":
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
-            file_name="fishing_results.xlsx",
+            file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
