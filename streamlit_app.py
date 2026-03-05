@@ -53,6 +53,7 @@ with col2:
 #mathsforwindele
 if passive_spec == "Wind Elemental":
     if st.button("RUN CALCULATOR", type="primary"):
+        rod_name = "Wind Elemental"
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -77,8 +78,8 @@ if passive_spec == "Wind Elemental":
                 # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -89,7 +90,7 @@ if passive_spec == "Wind Elemental":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -98,6 +99,7 @@ if passive_spec == "Wind Elemental":
 #mathsforseraphic
 if passive_spec == "Seraphic":
     if st.button("RUN CALCULATOR", type="primary"):
+        rod_name = "Seraphic Rod"
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -122,8 +124,8 @@ if passive_spec == "Seraphic":
                 # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -134,7 +136,7 @@ if passive_spec == "Seraphic":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -144,6 +146,7 @@ if passive_spec == "Seraphic":
 #mathforluminescent
 if passive_spec == "Luminescent":
     if st.button("RUN CALCULATOR", type="primary"):
+        rod_name = "Luminescent Oath"
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -168,8 +171,8 @@ if passive_spec == "Luminescent":
                 # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -180,7 +183,7 @@ if passive_spec == "Luminescent":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -190,6 +193,7 @@ if passive_spec == "Luminescent":
 #mathsfordeadmans
 if passive_spec == "Dead Man's Rod":
     if st.button("RUN CALCULATOR", type="primary"):
+        rod_name = "Dead Man's Rod"
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -211,11 +215,11 @@ if passive_spec == "Dead Man's Rod":
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
-        # export
+                # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -226,7 +230,7 @@ if passive_spec == "Dead Man's Rod":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -237,6 +241,7 @@ if passive_spec == "Dead Man's Rod":
 #mathforruinous
 if passive_spec == "Ruinous":
     if st.button("RUN CALCULATOR", type="primary"):
+        rod_name = "Ruinous Oath"
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -267,8 +272,8 @@ if passive_spec == "Ruinous":
                 # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -279,7 +284,7 @@ if passive_spec == "Ruinous":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -290,6 +295,7 @@ if passive_spec == "Ruinous":
 # mathforonirifalx
 if passive_spec == "Onirifalx":
     if st.button("RUN CALCULATOR", type="primary"):
+        rod_name = "Onirifalx"
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -314,8 +320,8 @@ if passive_spec == "Onirifalx":
                 # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -326,7 +332,7 @@ if passive_spec == "Onirifalx":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -360,8 +366,8 @@ if passive_spec == "None":
                 # export
         # results
         export_data = {
-            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
-            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
@@ -372,7 +378,7 @@ if passive_spec == "None":
         
         #download button
         st.download_button(
-            label="Download Results as Excel",
+            label="Download Excel File",
             data=buffer.getvalue(),
             file_name="fishing_results.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
