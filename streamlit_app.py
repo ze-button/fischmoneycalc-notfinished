@@ -16,7 +16,7 @@ with st.sidebar:
     spark_ch = st.number_input("Sparkling Chance %", value=1,min_value=1, max_value=100)
     shin_ch = st.number_input("Shiny Chance %", value=1,min_value=1, max_value=100)
     lure_spd = st.number_input("Lure Speed", value=0)
-    fsh_count = st.number_input("Fisch Count", value=3)
+    fsh_count = st.number_input("Fish Count", value=3)
     mutt_count = st.number_input("Mutation Count", value=3)
     passive_spec = st.selectbox(
     "Rod Passive (WIP)",
@@ -86,7 +86,7 @@ if passive_spec == "Luminescent":
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
         total_speed = rod_speed + avg_f_speed
     
-        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * ((0.15*(55/80)+(0.85))) + 1.2 + 1 + lure_speed
+        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * ((0.15*(60/85)+(0.85))) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
@@ -111,7 +111,7 @@ if passive_spec == "Dead Man's Rod":
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
         total_speed = rod_speed + avg_f_speed
     
-        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * (0.5) + 1.2 + 1 + lure_speed
+        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * (45/85) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
@@ -142,7 +142,7 @@ if passive_spec == "Ruinous":
         solutions = sp.solve(f_x - x, x)
         positive_solutions = [float(sol) for sol in solutions if sol > 0]
         
-        time_to_catch = (positive_solutions[0]*((0.15*(0.15/80))+(0.85))) + 1.2 + 1 + lure_speed
+        time_to_catch = (positive_solutions[0]*((0.15*(20/85))+(0.85))) + 1.2 + 1 + lure_speed
         testtt = positive_solutions[0]
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
@@ -169,7 +169,7 @@ if passive_spec == "Onirifalx":
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
         total_speed = rod_speed + avg_f_speed
     
-        time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((45/80*0.3)+0.7)) + 1.2 + 1 + lure_speed
+        time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((50/85*0.3)+0.7)) + 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
