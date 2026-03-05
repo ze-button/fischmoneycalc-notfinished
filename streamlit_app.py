@@ -1,5 +1,7 @@
 import streamlit as st
 import sympy as sp
+import pandas as pd
+import io
 
 st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
@@ -72,6 +74,27 @@ if passive_spec == "Wind Elemental":
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
+                # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
 #mathsforseraphic
 if passive_spec == "Seraphic":
     if st.button("RUN CALCULATOR", type="primary"):
@@ -95,6 +118,27 @@ if passive_spec == "Seraphic":
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
+
+                # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
 
 #mathforluminescent
@@ -120,6 +164,27 @@ if passive_spec == "Luminescent":
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
+
+                # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
         
 
 #mathsfordeadmans
@@ -145,6 +210,27 @@ if passive_spec == "Dead Man's Rod":
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
+
+        # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
 
         
@@ -178,6 +264,27 @@ if passive_spec == "Ruinous":
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
+                # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
 
 
 # mathforonirifalx
@@ -204,6 +311,27 @@ if passive_spec == "Onirifalx":
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
+                # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
 
 # mathfornone
 if passive_spec == "None":
@@ -228,3 +356,24 @@ if passive_spec == "None":
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
+
+                # export
+        # results
+        export_data = {
+            "Metric": ["Total Money", "Total Catches", "Catch Speed (s)", "Avg Fish Value"],
+            "Value": [total_money, catches, time_to_catch, avg_fish_val]
+        }
+        df = pd.DataFrame(export_data)
+
+        #dataframetoexcelbuffer
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        
+        #download button
+        st.download_button(
+            label="Download Results as Excel",
+            data=buffer.getvalue(),
+            file_name="fishing_results.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
