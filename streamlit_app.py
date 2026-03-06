@@ -51,10 +51,17 @@ with col2:
 
 
 # mathfornone
-col1, col2, col3 = st.columns([1, 1, 1])
+row1_col1, row1_col2, row1_col3 = st.columns([1, 1, 1])
+with row1_col2:
+    st.write(" ")
 
-with col2:
+
+row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
+
+with row2_col2:
+
     run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True)
+
 
 if run_calc:
 
