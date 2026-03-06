@@ -23,8 +23,7 @@ with st.sidebar:
     passive_spec = st.selectbox(
     "Rod Passive (WIP)",
     options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental"])
-    if passive_spec == "None":
-        rod_name = st.text_input("Rod Name")
+    rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
 
@@ -50,10 +49,10 @@ with col2:
         m_data.append((m_ch, m_val))
 
 
-#mathsforwindele
-if passive_spec == "Wind Elemental":
+# mathfornone
+
     if st.button("RUN CALCULATOR", type="primary"):
-        rod_name = "Wind Elemental"
+
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -61,299 +60,39 @@ if passive_spec == "Wind Elemental":
         avg_f_val = sum(f[0] * f[1] for f in f_data)/100
         avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
         avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
-        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
         total_speed = rod_speed + avg_f_speed
-    
-        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * (50/85) + 1.2 + 1 + lure_speed
-        catches = time_given / time_to_catch
-        total_money = (avg_f_val * val_mult) * catches
-        avg_fish_val = avg_f_val*val_mult
-        st.divider()
-        st.metric("Total Money made with Wind Elemental", f"{total_money:,.0f} C$")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
-                # export
-        # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
-        df = pd.DataFrame(export_data)
-
-        #dataframetoexcelbuffer
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        #download button
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-
-#mathsforseraphic
-if passive_spec == "Seraphic":
-    if st.button("RUN CALCULATOR", type="primary"):
-        rod_name = "Seraphic Rod"
-        spark_m = (spark_ch * 0.85)/100 + 1
-        shiny_m = (shin_ch * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-    
-        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
-        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
-        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-        total_speed = rod_speed + avg_f_speed
-    
-        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * (40/85) + 1.2 + 1 + lure_speed
-        catches = time_given / time_to_catch
-        total_money = (avg_f_val * val_mult) * catches
-        avg_fish_val = avg_f_val*val_mult
-        st.divider()
-        st.metric("Total Money made with Seraphic Rod", f"{total_money:,.0f} C$")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
-
-                # export
-        # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
-        df = pd.DataFrame(export_data)
-
-        #dataframetoexcelbuffer
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        #download button
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-
-
-#mathforluminescent
-if passive_spec == "Luminescent":
-    if st.button("RUN CALCULATOR", type="primary"):
-        rod_name = "Luminescent Oath"
-        spark_m = (spark_ch * 0.85)/100 + 1
-        shiny_m = (shin_ch * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-    
-        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
-        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
-        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-        total_speed = rod_speed + avg_f_speed
-    
-        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * ((0.15*(60/85)+(0.85))) + 1.2 + 1 + lure_speed
-        catches = time_given / time_to_catch
-        total_money = (avg_f_val * val_mult) * catches
-        avg_fish_val = avg_f_val*val_mult
-        st.divider()
-        st.metric("Total Money made with Dead Man's Rod", f"{total_money:,.0f} C$")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
-
-                # export
-        # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
-        df = pd.DataFrame(export_data)
-
-        #dataframetoexcelbuffer
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        #download button
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-        
-
-#mathsfordeadmans
-if passive_spec == "Dead Man's Rod":
-    if st.button("RUN CALCULATOR", type="primary"):
-        rod_name = "Dead Man's Rod"
-        spark_m = (spark_ch * 0.85)/100 + 1
-        shiny_m = (shin_ch * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-    
-        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
-        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
-        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-        total_speed = rod_speed + avg_f_speed
-    
-        time_to_catch = 6.8 / ((total_speed / 100) + 1 ) * (45/85) + 1.2 + 1 + lure_speed
-        catches = time_given / time_to_catch
-        total_money = (avg_f_val * val_mult) * catches
-        avg_fish_val = avg_f_val*val_mult
-        st.divider()
-        st.metric("Total Money made with Dead Man's Rod", f"{total_money:,.0f} C$")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
-
-                # export
-        # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
-        df = pd.DataFrame(export_data)
-
-        #dataframetoexcelbuffer
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        #download button
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-
-
-        
-#mathforruinous
-if passive_spec == "Ruinous":
-    if st.button("RUN CALCULATOR", type="primary"):
-        rod_name = "Ruinous Oath"
-        spark_m = (spark_ch * 0.85)/100 + 1
-        shiny_m = (shin_ch * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-    
-        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
-        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
-        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-        total_speed = rod_speed + avg_f_speed
-        
-        x = sp.symbols('x') #sympy stuff
+        #sympy stuff
+        x = sp.symbols('x') 
         f_x = 6.8 / (1 + (total_speed + 5 * x) / 100)
         solutions = sp.solve(f_x - x, x)
         positive_solutions = [float(sol) for sol in solutions if sol > 0]
-        
-        time_to_catch = (positive_solutions[0]*((0.15*(20/85))+(0.85))) + 1.2 + 1 + lure_speed
-        testtt = positive_solutions[0]
-        catches = time_given / time_to_catch
-        total_money = (avg_f_val * val_mult) * catches
-        avg_fish_val = avg_f_val*val_mult
-        st.divider()
-        st.metric("Total Money made with Ruinous Oath", f"{total_money:,.0f} C$")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
 
-                # export
-        # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
-        df = pd.DataFrame(export_data)
+        #passivemulti
+        if passive_spec == "Ruinous":
+            passives_multi=((0.15*(20/85))+(0.85))
+        elif passive_spec == "Wind Elemental":
+            passives_multi=(50/85)
+        elif passive_spec == "Luminescent":
+            passives_multi=((0.15*(60/85)+(0.85)))
+        elif passive_spec == "Seraphic":
+            passives_multi=(40/85)
+        elif passive_spec=="Onirifalx":
+            passives_multi=((50/85*0.3)+0.7)
+        elif passive_spec=="Dead Man's Rod":
+            passives_multi=(45/85)
+        elif passive_spec=="None":
+            passives_multi=1
 
-        #dataframetoexcelbuffer
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        #download button
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+        #timetocatchformula
+        if passive_spec == "Ruinous":
+            time_to_catch_formul= positive_solutions[0]
+        else:
+            time_to_catch_formul= (6.8 / ((total_speed / 100) + 1))
 
-
-
-# mathforonirifalx
-if passive_spec == "Onirifalx":
-    if st.button("RUN CALCULATOR", type="primary"):
-        rod_name = "Onirifalx"
-        spark_m = (spark_ch * 0.85)/100 + 1
-        shiny_m = (shin_ch * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-    
-        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
-        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
+        #finalstuff
         val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-        total_speed = rod_speed + avg_f_speed
-    
-        time_to_catch = ((6.8 / ((total_speed / 100) + 1))*((50/85*0.3)+0.7)) + 1.2 + 1 + lure_speed
-        catches = time_given / time_to_catch
-        total_money = (avg_f_val * val_mult) * catches
-        avg_fish_val = avg_f_val*val_mult
-        st.divider()
-        st.metric("Total Money made with Onirifalx", f"{total_money:,.0f} C$")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
-
-                # export
-        # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
-        df = pd.DataFrame(export_data)
-
-        #dataframetoexcelbuffer
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        #download button
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-
-
-# mathfornone
-if passive_spec == "None":
-    if st.button("RUN CALCULATOR", type="primary"):
-        spark_m = (spark_ch * 0.85)/100 + 1
-        shiny_m = (shin_ch * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-    
-        avg_f_val = sum(f[0] * f[1] for f in f_data)/100
-        avg_f_speed = sum(f[0] * f[2] for f in f_data)/100
-        avg_mut_m = sum(m[0] * m[1] for m in m_data)/100
-    
-        val_mult = avg_mut_m * size_mult * shiny_m * spark_m
-        total_speed = rod_speed + avg_f_speed
-    
-        time_to_catch = (6.8 / ((total_speed / 100) + 1)) + 1.2 + 1 + lure_speed
+        time_to_catch = (time_to_catch_formul*passives_multi)+ 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
@@ -376,7 +115,7 @@ if passive_spec == "None":
         with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
             df.to_excel(writer, index=False, sheet_name='Sheet1')
         
-        #download button
+        #downloadbutton
         st.download_button(
             label="Download Excel File",
             data=buffer.getvalue(),
