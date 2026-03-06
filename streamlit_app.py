@@ -121,10 +121,16 @@ if run_calc:
 
                 # export
         # results
-        export_data = {
-            "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [specific_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
-        }
+        if passive_spec == "None":
+            export_data = {
+                "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+                "B": [specific_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
+            }
+        else
+                        export_data = {
+                "A": ["Rod", "Spec","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
+                "B": [specific_name, rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
+            }
         df = pd.DataFrame(export_data)
 
         #dataframetoexcelbuffer
