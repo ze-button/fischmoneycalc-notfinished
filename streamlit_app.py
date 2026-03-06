@@ -113,6 +113,8 @@ if run_calc:
         avg_fish_val = avg_f_val*val_mult
         st.divider()
         st.metric(f"Total Money made with {specific_name}:" , f"{total_money:,.0f} C$")
+        if passive_spec != "None" 
+            st.write(f"({rod_name})")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
