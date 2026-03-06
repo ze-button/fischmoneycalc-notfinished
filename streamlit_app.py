@@ -126,7 +126,7 @@ if run_calc:
                 "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
                 "B": [specific_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
             }
-        else
+        else:
                         export_data = {
                 "A": ["Rod", "Spec","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
                 "B": [specific_name, rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
