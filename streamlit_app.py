@@ -51,8 +51,7 @@ with col2:
 
 
 # mathfornone
-
-    if st.button("RUN CALCULATOR", type="primary"):
+st.button("RUN CALCULATOR", type="primary"):
 
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
