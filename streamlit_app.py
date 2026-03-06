@@ -23,8 +23,7 @@ with st.sidebar:
     passive_spec = st.selectbox(
     "Rod Passive (WIP)",
     options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental"])
-    if passive_spec == "None":
-        rod_name = st.text_input("Rod Name")
+    rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
 
