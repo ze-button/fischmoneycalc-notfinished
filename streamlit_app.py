@@ -51,7 +51,12 @@ with col2:
 
 
 # mathfornone
-st.button("RUN CALCULATOR", type="primary"):
+col1, col2, col3 = st.columns([1, 1, 1])
+
+with col2:
+    run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True)
+
+if run_calc:
 
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
