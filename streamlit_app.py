@@ -63,7 +63,11 @@ with row2_col2:
 
 
 if run_calc:
-
+        if passive_spec == "None":
+            name = rod_name
+        else:
+        name = passive_spec
+        
         spark_m = (spark_ch * 0.85)/100 + 1
         shiny_m = (shin_ch * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
@@ -108,7 +112,7 @@ if run_calc:
         total_money = (avg_f_val * val_mult) * catches
         avg_fish_val = avg_f_val*val_mult
         st.divider()
-        st.metric(f"Total Money made with {rod_name}:" , f"{total_money:,.0f} C$")
+        st.metric(f"Total Money made with {name}:" , f"{total_money:,.0f} C$")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {avg_fish_val:.2f}")
@@ -117,7 +121,7 @@ if run_calc:
         # results
         export_data = {
             "A": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-            "B": [rod_name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
+            "B": [name, total_money, catches, time_given, time_to_catch, avg_fish_val, val_mult]
         }
         df = pd.DataFrame(export_data)
 
