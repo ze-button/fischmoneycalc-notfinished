@@ -98,8 +98,8 @@ if run_calc:
             passives_exponent=(45/85)
         elif passive_specification=="None":
             passives_exponent=1
-            elif passive_specification=="Plaguereaver":
-        passives_exponent=(45/85)
+        elif passive_specification=="Plaguereaver":
+            passives_exponent=(45/85)
 
         #timetocatchformula
         if passive_specification == "Ruinous":
