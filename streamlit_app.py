@@ -22,7 +22,7 @@ with st.sidebar:
     mutation_count = st.number_input("Mutation Count", value=3)
     passive_specification = st.selectbox(
     "Rod Passive (WIP)",
-    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental"])
+    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver"])
     rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
@@ -98,6 +98,8 @@ if run_calc:
             passives_exponent=(45/85)
         elif passive_specification=="None":
             passives_exponent=1
+            elif passive_specification=="Plaguereaver":
+        passives_exponent=(45/85)
 
         #timetocatchformula
         if passive_specification == "Ruinous":
