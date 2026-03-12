@@ -29,7 +29,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Fish Stats")
-    st.caption("Make sure the chances add up to 100%. -------------------------------------------------------------------------------------------------------")
+    st.caption("Make sure the chances add up to 100%. ---------------------------------------------------------------------------------------------------------------")
     fish_data = []
     for i in range(fish_count):
         column = st.columns(3)
