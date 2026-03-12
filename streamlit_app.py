@@ -32,6 +32,7 @@ with col1:
     st.caption("Make sure the chances add up to 100%")
     st.caption(" ")
     st.caption(" ")
+    st.caption(" ")
     fish_data = []
     for i in range(fish_count):
         column = st.columns(3)
