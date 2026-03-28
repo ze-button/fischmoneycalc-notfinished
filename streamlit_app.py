@@ -23,7 +23,7 @@ with st.sidebar:
     passive_specification = st.selectbox(
     "Rod Passive (WIP)",
     options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"])
-    rod_name = st.text_input("Rod Name")
+    rod_name = st.text_input("Rod Name (Optional)")
     glitch_potion = st.selectbox(
     "Glitch Potion?",
     options=["Yes","No"])
