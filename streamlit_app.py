@@ -87,7 +87,7 @@ if run_calc:
         positive_solutions_ruinous = [sol.evalf() for sol in solutions_ruinous if sol.is_real and sol > 0]
         d_x = 6.8 / (1 + (total_lure_speed + (4*x*5*0.33) / 100))
         solutions_dreambreaker = sp.solve(d_x - x, x) #find d(x)=x
-        positive_solutions_dreambreaker = [sol.evalf() for sol in solutions_ruinous if sol.is_real and sol > 0]
+        positive_solutions_dreambreaker = [sol.evalf() for sol in solutions_dreambreaker if sol.is_real and sol > 0]
 
         #passivemulti #REDO ALL THIS
         if passive_specification == "Ruinous":
