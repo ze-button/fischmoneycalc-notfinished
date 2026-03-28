@@ -23,10 +23,7 @@ with st.sidebar:
     passive_specification = st.selectbox(
     "Rod Passive (WIP)",
     options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"])
-    rod_name = st.text_input("Rod Name (Optional)")
-    glitch_potion = st.selectbox(
-    "Glitch Potion?",
-    options=["Yes","No"])
+    rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
 
@@ -87,10 +84,10 @@ if run_calc:
         x = sp.symbols('x')
         r_x = 6.8 / (1 + (total_lure_speed + (5 * x) + 4*x*2*(0.5+(0.8*x))) / 100)
         solutions_ruinous = sp.solve(r_x - x, x) #find r(x)=x
-        positive_solutions_ruinous = [sol.evalf() for sol in solutions_ruinous if sol.is_real and sol > 0]
+        positive_solutions_ruinous = [float(sol) for sol in solutions_ruinous if sol > 0] #use the positive solution
         d_x = 6.8 / (1 + ((total_lure_speed + (4*x*5*0.33)) / 100))
         solutions_dreambreaker = sp.solve(d_x - x, x) #find d(x)=x
-        positive_solutions_dreambreaker = [sol.evalf() for sol in solutions_dreambreaker if sol.is_real and sol > 0]
+        positive_solutions_dreambreaker = [float(sol) for sol in solutions_dreambreaker if sol > 0]
 
         #passivemulti #REDO ALL THIS
         if passive_specification == "Ruinous":
@@ -121,14 +118,10 @@ if run_calc:
             time_to_catch_formula= (6.8 / ((total_lure_speed / 100) + 1))
 
         #finalstuff
-        if glitch_potion == "Yes":
-            glitch= 2
-        else:
-            glitch= 1
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
         time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
-        total_money_made = (average_fish_value * value_multiplier) * catches * glitch
+        total_money_made = (average_fish_value * value_multiplier) * catches
         average_fish_final_value = average_fish_value * value_multiplier
         st.divider()
         st.metric(f"Total Money made with {specific_name}:" , f"{total_money_made:,.0f} C$")
