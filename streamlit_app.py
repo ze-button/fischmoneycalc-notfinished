@@ -84,10 +84,10 @@ if run_calc:
         x = sp.symbols('x')
         r_x = 6.8 / (1 + (total_lure_speed + (5 * x) + 4*x*2*(0.5+(0.8*x))) / 100)
         solutions_ruinous = sp.solve(r_x - x, x) #find r(x)=x
-        positive_solutions_ruinous = [float(sol) for sol in solutions_ruinous if sol > 0] #use the positive solution
+        positive_solutions_ruinous = [sol.evalf() for sol in solutions_ruinous if sol.is_real and sol > 0]
         d_x = 6.8 / (1 + (total_lure_speed + (4*x*5*0.33) / 100))
         solutions_dreambreaker = sp.solve(d_x - x, x) #find d(x)=x
-        positive_solutions_dreambreaker = [float(sol) for sol in solutions_dreambreaker if sol > 0]
+        positive_solutions_dreambreaker = [sol.evalf() for sol in solutions_ruinous if sol.is_real and sol > 0]
 
         #passivemulti #REDO ALL THIS
         if passive_specification == "Ruinous":
