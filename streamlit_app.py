@@ -22,7 +22,7 @@ with st.sidebar:
     mutation_count = st.number_input("Mutation Count", value=3)
     passive_specification = st.selectbox(
     "Rod Passive (WIP)",
-    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver"])
+    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"])
     rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
@@ -81,32 +81,39 @@ if run_calc:
         total_lure_speed = rod_speed + average_fish_prog_speed
 
         #sympy stuff
-        x = sp.symbols('x') #define x
-        f_x = 6.8 / (1 + (total_lure_speed + 5 * x) / 100) #define f(x)
-        solutions = sp.solve(f_x - x, x) #find f(x)=x
-        positive_solutions = [float(sol) for sol in solutions if sol > 0] #use the positive solution
+        x = sp.symbols('x')
+        r_x = 6.8 / (1 + (total_lure_speed + (5 * x) + 4*x*2*(0.5+(0.8*x))) / 100)
+        solutions_ruinous = sp.solve(r_x - x, x) #find r(x)=x
+        positive_solutions_ruinous = [float(sol) for sol in solutions_ruinous if sol > 0] #use the positive solution
+        d_x = 6.8 / (1 + (total_lure_speed + (4*x*5*0.33) / 100))
+        solutions_dreambreaker = sp.solve(d_x - x, x) #find d(x)=x
+        positive_solutions_dreambreaker = [float(sol) for sol in solutions_dreambreaker if sol > 0]
 
-        #passivemulti
+        #passivemulti #REDO ALL THIS
         if passive_specification == "Ruinous":
-            passives_exponent=((0.15*(20/85))+(0.85))
+            passives_exponent=((0.15*(20/80))+(0.85))
         elif passive_specification == "Wind Elemental":
-            passives_exponent=(50/85)
+            passives_exponent=(50/80)
         elif passive_specification == "Luminescent":
-            passives_exponent=((0.15*(60/85)+(0.85)))
+            passives_exponent=((0.15*(60/80)+(0.85)))
         elif passive_specification == "Seraphic":
-            passives_exponent=(40/85)
+            passives_exponent=(40/80)
         elif passive_specification=="Onirifalx":
-            passives_exponent=((50/85*0.3)+0.7)
+            passives_exponent=((50/80*0.3)+0.7)
         elif passive_specification=="Dead Man's Rod":
-            passives_exponent=(45/85)
+            passives_exponent=(40/80)
         elif passive_specification=="None":
             passives_exponent=1
         elif passive_specification=="Plaguereaver":
-            passives_exponent=(45/85)
+            passives_exponent=(40/80)
+        elif passive_specification=="Dreambreaker":
+            passives_exponent=1
 
         #timetocatchformula
         if passive_specification == "Ruinous":
-            time_to_catch_formula= positive_solutions[0]
+            time_to_catch_formula= positive_solutions_ruinous[0]
+        elif passive_specification == "Dreambreaker":
+            time_to_catch_formula= positive_solutions_dreambreaker[0]
         else:
             time_to_catch_formula= (6.8 / ((total_lure_speed / 100) + 1))
 
