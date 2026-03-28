@@ -24,6 +24,9 @@ with st.sidebar:
     "Rod Passive (WIP)",
     options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"])
     rod_name = st.text_input("Rod Name")
+    glitch_potion = st.selectbox(
+    "Glitch Potion?",
+    options=["Yes","No"])
 
 col1, col2 = st.columns(2)
 
@@ -118,10 +121,14 @@ if run_calc:
             time_to_catch_formula= (6.8 / ((total_lure_speed / 100) + 1))
 
         #finalstuff
+        if glitch_potion == "Yes":
+            glitch= 2
+        else:
+            glitch= 1
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
         time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
-        total_money_made = (average_fish_value * value_multiplier) * catches
+        total_money_made = (average_fish_value * value_multiplier) * catches * glitch
         average_fish_final_value = average_fish_value * value_multiplier
         st.divider()
         st.metric(f"Total Money made with {specific_name}:" , f"{total_money_made:,.0f} C$")
