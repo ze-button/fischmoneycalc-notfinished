@@ -83,19 +83,19 @@ if run_calc:
         #sympy stuff
         x = sp.symbols('x', real=True)
     
-        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)^x
+        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)**x
         solutions_ruinous = sp.solve(r_x - x, x)
         positive_solutions_ruinous = [
         float(sol.evalf()) for sol in solutions_ruinous 
         if sol.is_real and sol > 0]
     
-        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)^x
+        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)**x
         solutions_dreambreaker = sp.solve(d_x - x, x)
         positive_solutions_dreambreaker = [
         float(sol.evalf()) for sol in solutions_dreambreaker 
         if sol.is_real and sol > 0]
 
-        f_x = (6.8/(1+(total_lure_speed + 33*x))) *(78.5/80)^x                               
+        f_x = (6.8/(1+(total_lure_speed + 33*x))) *(78.5/80)**x                               
         solutions_fabulous = sp.solve(f_x - x, x)
         positive_solutions_fabulous = [
         float(sol.evalf()) for sol in solutions_fabulous 
