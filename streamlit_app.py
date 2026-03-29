@@ -93,7 +93,7 @@ if run_calc:
                 return float(sol)
             except Exception:
                 return 6.8 / ((total_lure_speed / 100) + 1) 
-        
+
          #timetocatchformula
         if passive_specification == "Ruinous":
             time_to_catch_formula = solve_safely(r_x, x)
@@ -103,7 +103,8 @@ if run_calc:
             time_to_catch_formula = solve_safely(f_x, x)
         else:
             time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
-    
+            
+        passives_exponent = 1.0      
         #passivemulti
         if passive_specification == "Ruinous":
             passives_exponent=((0.15*(20/80))+(0.85))
