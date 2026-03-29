@@ -82,24 +82,18 @@ if run_calc:
 
         #sympy stuff
         x = sp.symbols('x', real=True)
-    
-        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)**x
-        solutions_ruinous = sp.solve(r_x - x, x)
-        positive_solutions_ruinous = [
-        float(sol.evalf()) for sol in solutions_ruinous 
-        if sol.is_real and sol > 0]
-    
-        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)**x
-        solutions_dreambreaker = sp.solve(d_x - x, x)
-        positive_solutions_dreambreaker = [
-        float(sol.evalf()) for sol in solutions_dreambreaker 
-        if sol.is_real and sol > 0]
 
-        f_x = (6.8/(1+(total_lure_speed + 33*x))) *(78.5/80)**x                               
-        solutions_fabulous = sp.solve(f_x - x, x)
-        positive_solutions_fabulous = [
-        float(sol.evalf()) for sol in solutions_fabulous 
-        if sol.is_real and sol > 0]
+        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)**x - x
+        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)**x - x
+        f_x = (6.8 / (1 + (total_lure_speed + 33*x))) * (78.5/80)**x - x
+    
+        def solve_safely(equation, symbol, guess=5.0):
+            try:
+                sol = sp.nsolve(equation, symbol, guess)
+                return float(sol)
+            except Exception:
+                return 6.8 / ((total_lure_speed / 100) + 1) 
+        
     
         #passivemulti #REDO ALL THIS
         if passive_specification == "Ruinous":
@@ -123,13 +117,13 @@ if run_calc:
 
         #timetocatchformula
         if passive_specification == "Ruinous":
-            time_to_catch_formula= positive_solutions_ruinous[0]
+            time_to_catch_formula = solve_safely(r_x, x)
         elif passive_specification == "Dreambreaker":
-            time_to_catch_formula= positive_solutions_dreambreaker[0]
+            time_to_catch_formula = solve_safely(d_x, x)
         elif passive_specification == "Fabulous":
-            time_to_catch_formula= positive_solutions_fabulous[0]
+            time_to_catch_formula = solve_safely(f_x, x)
         else:
-            time_to_catch_formula= (6.8 / ((total_lure_speed / 100) + 1))
+            time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
 
         #finalstuff
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
