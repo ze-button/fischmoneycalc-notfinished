@@ -22,7 +22,7 @@ with st.sidebar:
     mutation_count = st.number_input("Mutation Count", value=3)
     passive_specification = st.selectbox(
     "Rod Passive (WIP)",
-    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"])
+    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Fabulous"])
     rod_name = st.text_input("Rod Name")
 
 col1, col2 = st.columns(2)
@@ -82,17 +82,25 @@ if run_calc:
 
         #sympy stuff
         x = sp.symbols('x', real=True)
-        r_x = 6.8 / (1 + (total_lure_speed + (5 * x) + 4*x*2*(0.5+(0.8*x))) / 100)
+    
+        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8x))/80)^x
         solutions_ruinous = sp.solve(r_x - x, x)
         positive_solutions_ruinous = [
         float(sol.evalf()) for sol in solutions_ruinous 
         if sol.is_real and sol > 0]
-        d_x = 6.8 / (1 + ((total_lure_speed + (4*x*5*0.33)) / 100))
+    
+        d_x = (6.8 / (1 + ((total_lure_speed / 100))) * (73.35/80)^x
         solutions_dreambreaker = sp.solve(d_x - x, x)
         positive_solutions_dreambreaker = [
         float(sol.evalf()) for sol in solutions_dreambreaker 
         if sol.is_real and sol > 0]
 
+        f_x = (6.8/(1+(total_lure_speed + 33x))) *(78.5/80)^x                               
+        solutions_fabulous = sp.solve(f_x - x, x)
+        positive_solutions_fabulous = [
+        float(sol.evalf()) for sol in solutions_fabulous 
+        if sol.is_real and sol > 0]
+    
         #passivemulti #REDO ALL THIS
         if passive_specification == "Ruinous":
             passives_exponent=((0.15*(20/80))+(0.85))
@@ -118,6 +126,8 @@ if run_calc:
             time_to_catch_formula= positive_solutions_ruinous[0]
         elif passive_specification == "Dreambreaker":
             time_to_catch_formula= positive_solutions_dreambreaker[0]
+        elif passive_specification == "Fabulous":
+            time_to_catch_formula= positive_solutions_fabulous[0]
         else:
             time_to_catch_formula= (6.8 / ((total_lure_speed / 100) + 1))
 
