@@ -83,7 +83,7 @@ if run_calc:
         #sympy stuff
         x = sp.symbols('x', real=True)
     
-        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8x))/80)^x
+        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)^x
         solutions_ruinous = sp.solve(r_x - x, x)
         positive_solutions_ruinous = [
         float(sol.evalf()) for sol in solutions_ruinous 
