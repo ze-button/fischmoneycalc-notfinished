@@ -95,7 +95,7 @@ if run_calc:
         float(sol.evalf()) for sol in solutions_dreambreaker 
         if sol.is_real and sol > 0]
 
-        f_x = (6.8/(1+(total_lure_speed + 33x))) *(78.5/80)^x                               
+        f_x = (6.8/(1+(total_lure_speed + 33*x))) *(78.5/80)^x                               
         solutions_fabulous = sp.solve(f_x - x, x)
         positive_solutions_fabulous = [
         float(sol.evalf()) for sol in solutions_fabulous 
