@@ -94,8 +94,17 @@ if run_calc:
             except Exception:
                 return 6.8 / ((total_lure_speed / 100) + 1) 
         
+         #timetocatchformula
+        if passive_specification == "Ruinous":
+            time_to_catch_formula = solve_safely(r_x, x)
+        elif passive_specification == "Dreambreaker":
+            time_to_catch_formula = solve_safely(d_x, x)
+        elif passive_specification == "Fabulous":
+            time_to_catch_formula = solve_safely(f_x, x)
+        else:
+            time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
     
-        #passivemulti #REDO ALL THIS
+        #passivemulti
         if passive_specification == "Ruinous":
             passives_exponent=((0.15*(20/80))+(0.85))
         elif passive_specification == "Wind Elemental":
@@ -114,17 +123,7 @@ if run_calc:
             passives_exponent=(40/80)
         elif passive_specification=="Dreambreaker":
             passives_exponent=1
-
-        #timetocatchformula
-        if passive_specification == "Ruinous":
-            time_to_catch_formula = solve_safely(r_x, x)
-        elif passive_specification == "Dreambreaker":
-            time_to_catch_formula = solve_safely(d_x, x)
-        elif passive_specification == "Fabulous":
-            time_to_catch_formula = solve_safely(f_x, x)
-        else:
-            time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
-
+            
         #finalstuff
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
         time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1 + lure_speed
