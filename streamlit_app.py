@@ -156,9 +156,9 @@ if run_calc:
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {average_fish_final_value:.2f}")
-        if sum(f[0] for f in fish_data) > 10000:
+        if sum(f[0] for f in fish_data) > 100:
              st.write(f"**WARNING! THE TOTAL FISH CHANCE EXCEEDS 100%**")
-        if sum(m[0] for m in mutation_data) > 10000:
+        if sum(m[0] for m in mutation_data) > 100:
              st.write(f"**WARNING! THE TOTAL MUTATION CHANCE EXCEEDS 100%**")
 
                 # export
