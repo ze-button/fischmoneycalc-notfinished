@@ -20,30 +20,36 @@ with st.sidebar:
     lure_spd = st.number_input("Lure Speed", value=0)
     fish_count = st.number_input("Fish Count", value=3)
     mutation_count = st.number_input("Mutation Count", value=3)
+    glitch_pot = st.selectbox(
+        "Glitch Potion?",
+        options=["Yes","No"]
+    )
     passive_specification = st.selectbox(
-    "Rod Passive (WIP)",
-    options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Fabulous"])
+        "Rod Passive (WIP)",
+        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Fabulous"]
+    )
     rod_name = st.text_input("Rod Name")
-
+    xp_multi1 = st.number_input("XP Multiplier 1",min_value=0)
+    xp_multi2 = st.number_input("XP Multiplier 2",min_value=0)
+    xp_multi3 = st.number_input("XP Multiplier 3",min_value=0)
+    xp_multi4 = st.number_input("XP Multiplier 4",min_value=0)
 col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Fish Stats")
-    st.caption("Make sure the chances add up to 100%")
-    st.caption(" ")
-    st.caption(" ")
-    st.caption(" ")
+    st.caption("Make sure the chances add up to 100%.")
     fish_data = []
     for i in range(fish_count):
-        column = st.columns(3)
+        column = st.columns(4)
         fih_chance = column[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"fch{i}")
         fih_avg_value = column[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
         fih_progress_speed = column[2].number_input(f"Fish {i+1} PrgSpd", value=0.0, key=f"fspd{i}")
-        fish_data.append((fih_chance, fih_avg_value, fih_progress_speed))
+        fih_xp = column[3].number_input(f"Fish {i+1} XP", value=0.0, key=f"fxp{i}")
+        fish_data.append((fih_chance, fih_avg_value, fih_progress_speed, fih_xp))
 
 with col2:
     st.subheader("Mutations")
-    st.caption("Make sure the chances add up to 100%. The chance of not applying a mutation should be included (x% with a 1x multiplier)")
+    st.caption("Make sure the chances add up to 100%.")
     mutation_data = []
     for i in range(mutation_count):
         column = st.columns(2)
@@ -74,11 +80,18 @@ if run_calc:
         sparkling_chance_final = (sparkling_chance * 0.85)/100 + 1
         shiny_chance_final = (shiny_chance * 0.85)/100 + 1
         lure_speed = max(0,1-(lure_spd/100))
+
+        total_xp_multip = xp_multi1 * xp_multi2 * xp_multi3 * xp_multi4
+
+        no_mut = 100 - (sum(m[0] for m in mutation_data))/100
     
         average_fish_value = sum(f[0] * f[1] for f in fish_data)/100
         average_fish_prog_speed = sum(f[0] * f[2] for f in fish_data)/100
-        average_mutation_multiplier = sum(m[0] * m[1] for m in mutation_data)/100
+        average_fish_xp = sum(f[0] * f[3] for f in fish_data)/100
+        average_mutation_multiplier = (sum(m[0] * m[1] for m in mutation_data)/100) + no_mut
         total_lure_speed = rod_speed + average_fish_prog_speed
+
+        total_xp = total_xp_multip * average_fish_xp
 
         #sympy stuff
         x = sp.symbols('x', real=True)
@@ -93,7 +106,7 @@ if run_calc:
                 return float(sol)
             except Exception:
                 return 6.8 / ((total_lure_speed / 100) + 1) 
-
+        
          #timetocatchformula
         if passive_specification == "Ruinous":
             time_to_catch_formula = solve_safely(r_x, x)
@@ -103,8 +116,7 @@ if run_calc:
             time_to_catch_formula = solve_safely(f_x, x)
         else:
             time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
-            
-        passives_exponent = 1.0      
+    
         #passivemulti
         if passive_specification == "Ruinous":
             passives_exponent=((0.15*(20/80))+(0.85))
@@ -126,18 +138,28 @@ if run_calc:
             passives_exponent=1
             
         #finalstuff
+        if glitch_pot ==  "Yes":
+             glitch = 2
+        else:
+             glitch = 1
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
         time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1 + lure_speed
         catches = time_given / time_to_catch
-        total_money_made = (average_fish_value * value_multiplier) * catches
+        total_money_made = (average_fish_value * value_multiplier) * catches * glitch
         average_fish_final_value = average_fish_value * value_multiplier
+        xp_final = total_xp * catches
         st.divider()
         st.metric(f"Total Money made with {specific_name}:" , f"{total_money_made:,.0f} C$")
         if passive_specification != "None":
             st.write(f"({rod_name})")
+        st.write(f"**Total XP Made:** {xp_final:.2f}")
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {average_fish_final_value:.2f}")
+        if sum(f[0] for f in fish_data) > 10000:
+             st.write(f"**WARNING! THE TOTAL FISH CHANCE EXCEEDS 100%**")
+        if sum(m[0] for m in mutation_data) > 10000:
+             st.write(f"**WARNING! THE TOTAL MUTATION CHANCE EXCEEDS 100%**")
 
                 # export
         # results
