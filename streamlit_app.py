@@ -22,7 +22,7 @@ with st.sidebar:
     mutation_count = st.number_input("Mutation Count", value=3)
     glitch_pot = st.selectbox(
         "Glitch Potion?",
-        options=["Yes","No"]
+        options=["No","Yes"]
     )
     passive_specification = st.selectbox(
         "Rod Passive (WIP)",
