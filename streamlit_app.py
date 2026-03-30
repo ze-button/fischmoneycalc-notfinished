@@ -37,7 +37,6 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Fish Stats")
-    st.caption("Make sure the chances add up to 100%.")
     fish_data = []
     for i in range(fish_count):
         column = st.columns(4)
@@ -49,7 +48,6 @@ with col1:
 
 with col2:
     st.subheader("Mutations")
-    st.caption("Make sure the chances add up to 100%.")
     mutation_data = []
     for i in range(mutation_count):
         column = st.columns(2)
