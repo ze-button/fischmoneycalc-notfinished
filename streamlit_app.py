@@ -5,7 +5,7 @@ import io
 
 st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
-st.title("A Simple Fisch Moneymaking Calc")
+st.title("A Simple Fisch Calc")
 st.write("Calculate how much you can theoretically make in a set amount of time.")
 st.caption("by @ze_button on discord")
 
