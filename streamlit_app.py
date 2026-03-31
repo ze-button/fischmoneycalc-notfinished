@@ -29,10 +29,10 @@ with st.sidebar:
         options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Fabulous"]
     )
     rod_name = st.text_input("Rod Name")
-    xp_multi1 = st.number_input("XP Multiplier 1",min_value=1)
-    xp_multi2 = st.number_input("XP Multiplier 2",min_value=1)
-    xp_multi3 = st.number_input("XP Multiplier 3",min_value=1)
-    xp_multi4 = st.number_input("XP Multiplier 4",min_value=1)
+    xp_multi1 = st.number_input("XP Multiplier 1",min_value=1.0)
+    xp_multi2 = st.number_input("XP Multiplier 2",min_value=1.0)
+    xp_multi3 = st.number_input("XP Multiplier 3",min_value=1.0)
+    xp_multi4 = st.number_input("XP Multiplier 4",min_value=1.0)
 col1, col2 = st.columns(2)
 
 with col1:
