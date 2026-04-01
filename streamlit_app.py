@@ -158,6 +158,7 @@ if run_calc:
              st.write(f"**WARNING! THE TOTAL FISH CHANCE EXCEEDS 100%**")
         if sum(m[0] for m in mutation_data) > 100:
              st.write(f"**WARNING! THE TOTAL MUTATION CHANCE EXCEEDS 100%**")
+        st.write(f"**TEST;AVG MUT MULTIP:** {average_mutation_multiplier:.2f}")
 
                 # export
         # results
