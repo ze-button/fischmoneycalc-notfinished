@@ -6,7 +6,6 @@ import requests
 import re
 
 # --- CONFIG & HELPERS ---
-st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
 def get_stat(content, stat_name):
     """Parses wikitext for specific fish stats."""
