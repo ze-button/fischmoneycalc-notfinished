@@ -2,3 +2,5 @@ streamlit
 sympy
 pandas
 openpyxl
+requests
+re
