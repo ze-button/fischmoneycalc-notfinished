@@ -22,7 +22,7 @@ with st.sidebar:
     )
     passive_specification = st.selectbox(
         "Rod Passive (WIP)",
-        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Fabulous"]
+        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"]
     )
     rod_name = st.text_input("Rod Name")
     xp_multi1 = st.number_input("XP Multiplier 1",min_value=1)
@@ -92,9 +92,9 @@ if run_calc:
         #sympy stuff
         x = sp.symbols('x', real=True)
 
-        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)**x - x
-        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)**x - x
-        f_x = (6.8 / (1 + (total_lure_speed + 33*x))) * (78.5/80)**x - x
+        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.05+0.08*x))/80)*x - x
+        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)*x - x
+        l_x = (6.8 / (1 + (total_lure_speed / 100)) * ((80-4*2*(0.05+0.1*x))/80)*x - x
     
         def solve_safely(equation, symbol, guess=5.0):
             try:
@@ -108,8 +108,8 @@ if run_calc:
             time_to_catch_formula = solve_safely(r_x, x)
         elif passive_specification == "Dreambreaker":
             time_to_catch_formula = solve_safely(d_x, x)
-        elif passive_specification == "Fabulous":
-            time_to_catch_formula = solve_safely(f_x, x)
+        elif passive_specification == "Luminescent":
+            time_to_catch_formula = solve_safely(l_x, x)
         else:
             time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
     
