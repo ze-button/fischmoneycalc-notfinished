@@ -77,14 +77,18 @@ with col1:
         cols = st.columns(3)
         f_chance = cols[0].number_input(f"Fish {i+1} %", value=0.0, key=f"fch{i}")
         f_name = cols[1].text_input(f"Fish {i+1} name", key=f"fname{i}")
-        fih_avg_value = cols[2].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
+        f_val_input = cols[2].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
         
         xp_val, prog_val = 0.0, 0.0
         if f_name:
             xp_val, prog_val = fetch_fish_stats(f_name)
-            st.caption(f"Found: {xp_val} XP, {prog_val} Speed")
+            if xp_val > 0:
+                st.caption(f"✅ Found: {xp_val} XP, {prog_val} Speed")
+            else:
+                st.caption("⚠️ Wiki data not found. Using 0.")
             
-        fish_data.append((f_chance, f_name, xp_val, prog_val))
+        # Store as: (Chance, Name, XP, Prog, MoneyValue)
+        fish_data.append((f_chance, f_name, xp_val, prog_val, f_val_input))
 
 # --- MUTATION INPUTS ---
 with col2:
@@ -98,15 +102,27 @@ with col2:
 
 # --- RAW SUMS (FOR YOUR CUSTOM MATH) ---
 st.divider()
-
-# Defining the raw sums you requested
+# f[2] is XP, f[3] is Speed, f[4] is Money
 sum_fish_xp = sum(f[2] for f in fish_data)
 sum_fish_speed = sum(f[3] for f in fish_data)
 
-# Displaying them for verification
 c1, c2 = st.columns(2)
 c1.metric("Sum Fish XP", sum_fish_xp)
 c2.metric("Sum Progress Speed", sum_fish_speed)
+
+# --- CALCULATOR LOGIC (FIXED INDEXES) ---
+row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
+with row2_col2:
+    run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True)
+
+if run_calc:
+    # ... (Keep your existing final_chance and multiplier math) ...
+    
+    # CORRECTED INDEXES FOR CALCULATIONS:
+    # f[0] = Chance, f[2] = XP, f[3] = Speed, f[4] = C$ Value
+    average_fish_value = sum(f[0] * f[4] for f in fish_data) / 100
+    average_fish_prog_speed = sum(f[0] * f[3] for f in fish_data) / 100
+    average_fish_xp = sum(f[0] * f[2] for f in fish_data) / 100
 
 # Add your custom math logic below this line
 
