@@ -15,17 +15,19 @@ def get_stat(content, stat_name):
     return match.group(1) if match else "0"
 
 def fetch_fish_stats(fish_name):
-    """Fetches XP and Progress Speed from Fischipedia."""
     if not fish_name:
         return 0.0, 0.0
     
+    # Strip whitespace and capitalize each word (e.g. "blue marlin" -> "Blue Marlin")
+    clean_name = fish_name.strip().title()
+    
     url = "https://fischipedia.org/w/api.php"
-    headers = {'User-Agent': 'Fischcalc (contact: your@email.com)'}
     params = {
         "action": "parse",
-        "page": fish_name.strip().title(),
+        "page": clean_name,
         "format": "json",
-        "prop": "wikitext"
+        "prop": "wikitext",
+        "redirects": 1  # This follows redirects if the page name is slightly off
     }
     
     try:
@@ -137,7 +139,7 @@ row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
 
 with row2_col2:
 
-    run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True)
+    run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True, key="main_calc_btn")
 
 
 if run_calc:
