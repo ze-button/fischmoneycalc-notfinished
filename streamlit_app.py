@@ -2,58 +2,113 @@ import streamlit as st
 import sympy as sp
 import pandas as pd
 import io
+import requests
+import re
 
+# --- CONFIG & HELPERS ---
 st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
-st.title("A Simple Fisch Calc")
-st.write("Calculate how much you can theoretically make in a set amount of time.")
+def get_stat(content, stat_name):
+    """Parses wikitext for specific fish stats."""
+    pattern = rf"\|{stat_name}\s*=\s*([\d\.]+)"
+    match = re.search(pattern, content)
+    return match.group(1) if match else "0"
+
+def fetch_fish_stats(fish_name):
+    """Fetches XP and Progress Speed from Fischipedia."""
+    if not fish_name:
+        return 0.0, 0.0
+    
+    url = "https://fischipedia.org/w/api.php"
+    headers = {'User-Agent': 'Fischcalc (contact: your@email.com)'}
+    params = {
+        "action": "parse",
+        "page": fish_name.strip().title(),
+        "format": "json",
+        "prop": "wikitext"
+    }
+    
+    try:
+        response = requests.get(url, params=params, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            if 'parse' in data:
+                content = data['parse']['wikitext']['*']
+                xp = get_stat(content, "xp")
+                prog = get_stat(content, "prog_speed")
+                return float(xp), float(prog)
+    except:
+        return 0.0, 0.0
+    return 0.0, 0.0
+
+# --- UI LAYOUT ---
+st.title("A Simple Fisch Moneymaking Calc")
 st.caption("by @ze_button on discord")
 
-# inputs
 with st.sidebar:
     st.header("Specifications")
     time_given = st.number_input("Time (seconds)", value=750)
-    rod_speed = st.number_input("Rod Prog Speed", value=0)
+    rod_speed = st.number_input("Rod Prog Speed", value=0.0)
     size_multiplier = st.number_input("Size Multiplier", value=1.0)
-    sparkling_chance = st.number_input("Sparkling Chance %", value=1,min_value=1, max_value=100)
-    shiny_chance = st.number_input("Shiny Chance %", value=1,min_value=1, max_value=100)
-    lure_spd = st.number_input("Lure Speed", value=0)
-    fish_count = st.number_input("Fish Count", value=3)
-    mutation_count = st.number_input("Mutation Count", value=3)
-    glitch_pot = st.selectbox(
-        "Glitch Potion?",
-        options=["No","Yes"]
-    )
+    sparkling_chance = st.number_input("Sparkling Chance %", value=1, min_value=1, max_value=100)
+    shiny_chance = st.number_input("Shiny Chance %", value=1, min_value=1, max_value=100)
+    lure_spd = st.number_input("Lure Speed", value=0.0)
+    fish_count = st.number_input("Fish Count", value=3, min_value=1)
+    mutation_count = st.number_input("Mutation Count", value=3, min_value=1)
+    
+    glitch_pot = st.selectbox("Glitch Potion?", options=["No", "Yes"])
     passive_specification = st.selectbox(
         "Rod Passive (WIP)",
-        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Fabulous"]
+        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx", "Luminescent", "Seraphic", "Wind Elemental", "Plaguereaver", "Dreambreaker", "Fabulous"]
     )
     rod_name = st.text_input("Rod Name")
-    xp_multi1 = st.number_input("XP Multiplier 1",min_value=1.0)
-    xp_multi2 = st.number_input("XP Multiplier 2",min_value=1.0)
-    xp_multi3 = st.number_input("XP Multiplier 3",min_value=1.0)
-    xp_multi4 = st.number_input("XP Multiplier 4",min_value=1.0)
+    xp_multi1 = st.number_input("XP Multiplier 1", value=1, min_value=1)
+    xp_multi2 = st.number_input("XP Multiplier 2", value=1, min_value=1)
+    xp_multi3 = st.number_input("XP Multiplier 3", value=1, min_value=1)
+    xp_multi4 = st.number_input("XP Multiplier 4", value=1, min_value=1)
+
 col1, col2 = st.columns(2)
 
+# --- FISH INPUTS ---
 with col1:
     st.subheader("Fish Stats")
     fish_data = []
     for i in range(fish_count):
-        column = st.columns(4)
-        fih_chance = column[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"fch{i}")
-        fih_avg_value = column[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
-        fih_progress_speed = column[2].number_input(f"Fish {i+1} Prg", value=0.0, key=f"fspd{i}")
-        fih_xp = column[3].number_input(f"Fish {i+1} XP", value=0.0, key=f"fxp{i}")
-        fish_data.append((fih_chance, fih_avg_value, fih_progress_speed, fih_xp))
+        cols = st.columns(3)
+        f_chance = cols[0].number_input(f"Fish {i+1} %", value=0.0, key=f"fch{i}")
+        f_name = cols[1].text_input(f"Fish {i+1} name", key=f"fname{i}")
+        fih_avg_value = cols[2].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
+        
+        xp_val, prog_val = 0.0, 0.0
+        if f_name:
+            xp_val, prog_val = fetch_fish_stats(f_name)
+            st.caption(f"Found: {xp_val} XP, {prog_val} Speed")
+            
+        fish_data.append((f_chance, f_name, xp_val, prog_val))
 
+# --- MUTATION INPUTS ---
 with col2:
     st.subheader("Mutations")
     mutation_data = []
     for i in range(mutation_count):
-        column = st.columns(2)
-        mut_chance = column[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"mch{i}")
-        mut_value = column[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
-        mutation_data.append((mut_chance, mut_value))
+        cols = st.columns(2)
+        m_chance = cols[0].number_input(f"Mut {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"mch{i}")
+        m_mult = cols[1].number_input(f"Mut {i+1} Mult", value=0.0, key=f"mval{i}")
+        mutation_data.append((m_chance, m_mult))
+
+# --- RAW SUMS (FOR YOUR CUSTOM MATH) ---
+st.divider()
+
+# Defining the raw sums you requested
+sum_fish_xp = sum(f[2] for f in fish_data)
+sum_fish_speed = sum(f[3] for f in fish_data)
+
+# Displaying them for verification
+c1, c2 = st.columns(2)
+c1.metric("Sum Fish XP", sum_fish_xp)
+c2.metric("Sum Progress Speed", sum_fish_speed)
+
+# Add your custom math logic below this line
 
 
 # math
@@ -81,7 +136,7 @@ if run_calc:
 
         total_xp_multip = xp_multi1 * xp_multi2 * xp_multi3 * xp_multi4
 
-        no_mut = (100 - (sum(m[0] for m in mutation_data)))/100
+        no_mut = 100 - (sum(m[0] for m in mutation_data))/100
     
         average_fish_value = sum(f[0] * f[1] for f in fish_data)/100
         average_fish_prog_speed = sum(f[0] * f[2] for f in fish_data)/100
@@ -154,11 +209,10 @@ if run_calc:
         st.write(f"**Total Catches:** {catches:.1f}")
         st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
         st.write(f"**Average Fish Value:** {average_fish_final_value:.2f}")
-        if sum(f[0] for f in fish_data) > 100:
+        if sum(f[0] for f in fish_data) > 10000:
              st.write(f"**WARNING! THE TOTAL FISH CHANCE EXCEEDS 100%**")
-        if sum(m[0] for m in mutation_data) > 100:
+        if sum(m[0] for m in mutation_data) > 10000:
              st.write(f"**WARNING! THE TOTAL MUTATION CHANCE EXCEEDS 100%**")
-        st.write(f"**TEST;AVG MUT MULTIP:** {average_mutation_multiplier:.2f}")
 
                 # export
         # results
