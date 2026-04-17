@@ -43,7 +43,7 @@ with col1:
         column = st.columns(4)
         fih_chance = column[0].number_input(f"Fish {i+1} %", value=0.0, step=0.01, format="%.2f", key=f"fch{i}")
         fih_avg_value = column[1].number_input(f"Fish {i+1} C$", value=0.0, key=f"fval{i}")
-        fih_progress_speed = column[2].number_input(f"Fish {i+1} PrgSpd", value=0.0, key=f"fspd{i}")
+        fih_progress_speed = column[2].number_input(f"Prog {i+1}", value=0.0, key=f"fspd{i}")
         fih_xp = column[3].number_input(f"Fish {i+1} XP", value=0.0, key=f"fxp{i}")
         fish_data.append((fih_chance, fih_avg_value, fih_progress_speed, fih_xp))
 
