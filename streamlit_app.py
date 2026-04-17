@@ -114,17 +114,6 @@ c2.metric("Sum Progress Speed", sum_fish_speed)
 
 # --- CALCULATOR LOGIC (FIXED INDEXES) ---
 row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
-with row2_col2:
-    run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True)
-
-if run_calc:
-    # ... (Keep your existing final_chance and multiplier math) ...
-    
-    # CORRECTED INDEXES FOR CALCULATIONS:
-    # f[0] = Chance, f[2] = XP, f[3] = Speed, f[4] = C$ Value
-    average_fish_value = sum(f[0] * f[4] for f in fish_data) / 100
-    average_fish_prog_speed = sum(f[0] * f[3] for f in fish_data) / 100
-    average_fish_xp = sum(f[0] * f[2] for f in fish_data) / 100
 
 # Add your custom math logic below this line
 
@@ -143,6 +132,10 @@ with row2_col2:
 
 
 if run_calc:
+        average_fish_value = sum(f[0] * f[4] for f in fish_data) / 100
+        average_fish_prog_speed = sum(f[0] * f[3] for f in fish_data) / 100
+        average_fish_xp = sum(f[0] * f[2] for f in fish_data) / 100
+
         if passive_specification == "None":
             specific_name = rod_name
         else:
