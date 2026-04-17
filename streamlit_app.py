@@ -94,7 +94,7 @@ if run_calc:
 
         r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.05+0.08*x))/80)*x - x
         d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)*x - x
-        l_x = (6.8 / (1 + (total_lure_speed / 100)) * ((80-4*2*(0.05+0.1*x))/80)*x - x
+        l_x = (6.8 / (1 + (total_lure_speed / 100))) * ((80-4*2*(0.05+0.1*x))/80)*x - x
     
         def solve_safely(equation, symbol, guess=5.0):
             try:
