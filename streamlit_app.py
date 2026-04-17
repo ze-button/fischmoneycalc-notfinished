@@ -37,8 +37,8 @@ def fetch_fish_stats(fish_name):
             data = response.json()
             if 'parse' in data:
                 content = data['parse']['wikitext']['*']
-                xp = get_stat(content, "xp")
-                prog = get_stat(content, "prog_speed")
+                xp = get_stat(content, "|xp")
+                prog = get_stat(content, "|prog_speed")
                 return float(xp), float(prog)
     except:
         return 0.0, 0.0
