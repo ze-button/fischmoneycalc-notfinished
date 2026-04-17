@@ -106,9 +106,6 @@ st.divider()
 sum_fish_xp = sum(f[2] for f in fish_data)
 sum_fish_speed = sum(f[3] for f in fish_data)
 
-c1, c2 = st.columns(2)
-c1.metric("Sum Fish XP", sum_fish_xp)
-c2.metric("Sum Progress Speed", sum_fish_speed)
 
 # --- CALCULATOR LOGIC (FIXED INDEXES) ---
 row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
