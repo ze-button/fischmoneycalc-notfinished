@@ -138,9 +138,9 @@ if run_calc:
 
         no_mut = 100 - (sum(m[0] for m in mutation_data))/100
     
-        average_fish_value = sum(f[0] * f[1] for f in fish_data)/100
-        average_fish_prog_speed = sum(f[0] * f[2] for f in fish_data)/100
-        average_fish_xp = sum(f[0] * f[3] for f in fish_data)/100
+        average_fish_value = sum(f[0] * f[2] for f in fish_data)/100
+        average_fish_prog_speed = sum(f[0] * sum_fish_speed for f in fish_data)/100
+        average_fish_xp = sum(f[0] * sum_fish_xp for f in fish_data)/100
         average_mutation_multiplier = (sum(m[0] * m[1] for m in mutation_data)/100) + no_mut
         total_lure_speed = rod_speed + average_fish_prog_speed
 
