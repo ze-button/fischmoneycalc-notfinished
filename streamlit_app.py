@@ -10,17 +10,24 @@ import re
 st.set_page_config(page_title="Fisch Calc", page_icon="🐟")
 
 def get_stat(wiki_text, stat_name):
-    """Parses wikitext using the specific logic provided in the image."""
+    """Parses wikitext using logic to match the wiki format in the image."""
+    # Wiki format is usually |stat_name = value
     search_term = f"|{stat_name.lower()}"
     
     if search_term in wiki_text.lower():
-        # Split by the term and take the part after it
-        after_stat = wiki_text.lower().split(search_term)[1]
-        # Get only the first line
-        line = after_stat.split("\n")[0]
-        # Clean up equals signs and whitespace
-        value = line.replace("=", "").strip()
-        return value
+        try:
+            # Split by the term and take the part after the first '='
+            after_stat = wiki_text.lower().split(search_term)[1]
+            # Get the line and split by newline or the next pipe
+            line = after_stat.split("\n")[0].split("|")[0]
+            # Clean up equals signs and common wiki formatting
+            value = line.replace("=", "").replace("[", "").replace("]", "").strip()
+            
+            # Extract the first numeric sequence found
+            numeric_match = re.search(r"[\d\.]+", value)
+            return numeric_match.group(0) if numeric_match else "0"
+        except:
+            return "0"
     return "0"
 
 def fetch_fish_stats(fish_name):
@@ -28,7 +35,6 @@ def fetch_fish_stats(fish_name):
         return 0.0, 0.0
     
     clean_name = fish_name.strip().title()
-    
     url = "https://fischipedia.org/w/api.php"
     headers = {'User-Agent': 'Fischcalc (contact: your@email.com)'}
     params = {
@@ -45,14 +51,16 @@ def fetch_fish_stats(fish_name):
             data = response.json()
             if 'parse' in data:
                 content = data['parse']['wikitext']['*']
-                xp = get_stat(content, "xp")
-                prog = get_stat(content, "prog_speed")
                 
-                # Convert results to float, handling potential non-numeric strings
-                try:
-                    return float(xp), float(prog)
-                except ValueError:
-                    return 0.0, 0.0
+                # Get XP
+                xp = get_stat(content, "xp")
+                
+                # Try 'prog_speed' first, then 'base_resil' as fallback
+                prog = get_stat(content, "prog_speed")
+                if prog == "0":
+                    prog = get_stat(content, "base_resil")
+                
+                return float(xp), float(prog)
     except:
         return 0.0, 0.0
     return 0.0, 0.0
@@ -95,10 +103,10 @@ with col1:
         xp_val, prog_val = 0.0, 0.0
         if f_name:
             xp_val, prog_val = fetch_fish_stats(f_name)
-            if xp_val > 0:
-                st.caption(f"✅ Found: {xp_val} XP, {prog_val} Speed")
+            if xp_val > 0 or prog_val > 0:
+                st.caption(f"✅ Found: {xp_val} XP, {prog_val} Speed/Resil")
             else:
-                st.caption("⚠️ Wiki data not found. Using 0.")
+                st.caption("⚠️ Wiki data not found or zero. Using 0.")
             
         fish_data.append((f_chance, f_name, xp_val, prog_val, f_val_input))
 
@@ -117,128 +125,92 @@ st.divider()
 sum_fish_xp = sum(f[2] for f in fish_data)
 sum_fish_speed = sum(f[3] for f in fish_data)
 
+st.columns(2)[0].metric("Sum Fish XP", sum_fish_xp)
+st.columns(2)[1].metric("Sum Speed/Resil", sum_fish_speed)
+
 # --- CALCULATOR LOGIC ---
-row2_col1, row2_col2, row2_col3 = st.columns([1, 1, 1])
+row2_col2 = st.columns([1, 1, 1])[1]
 
 with row2_col2:
     run_calc = st.button("RUN CALCULATOR", type="primary", use_container_width=True, key="main_calc_btn")
 
 if run_calc:
-        # Initial averages based on user input and fetched data
-        # Note: Updated to use correct tuple indices
-        average_fish_value = sum(f[0] * f[4] for f in fish_data) / 100
-        average_fish_prog_speed = sum(f[0] * f[3] for f in fish_data) / 100
-        average_fish_xp = sum(f[0] * f[2] for f in fish_data) / 100
+    # weighted averages based on chance
+    average_fish_value = sum(f[0] * f[4] for f in fish_data) / 100
+    average_fish_prog_speed = sum(f[0] * f[3] for f in fish_data) / 100
+    average_fish_xp = sum(f[0] * f[2] for f in fish_data) / 100
 
-        if passive_specification == "None":
-            specific_name = rod_name
-        else:
-            specific_name = passive_specification
-        
-        sparkling_chance_final = (sparkling_chance * 0.85)/100 + 1
-        shiny_chance_final = (shiny_chance * 0.85)/100 + 1
-        lure_speed = max(0,1-(lure_spd/100))
-
-        total_xp_multip = xp_multi1 * xp_multi2 * xp_multi3 * xp_multi4
-        no_mut = 100 - (sum(m[0] for m in mutation_data))/100
+    specific_name = passive_specification if passive_specification != "None" else rod_name
     
-        average_mutation_multiplier = (sum(m[0] * m[1] for m in mutation_data)/100) + no_mut
-        total_lure_speed = rod_speed + average_fish_prog_speed
+    sparkling_chance_final = (sparkling_chance * 0.85)/100 + 1
+    shiny_chance_final = (shiny_chance * 0.85)/100 + 1
+    lure_speed_calc = max(0, 1-(lure_spd/100))
 
-        total_xp = total_xp_multip * average_fish_xp
+    total_xp_multip = xp_multi1 * xp_multi2 * xp_multi3 * xp_multi4
+    no_mut = 100 - (sum(m[0] for m in mutation_data))/100
 
-        # Sympy solver logic
-        x = sp.symbols('x', real=True)
+    average_mutation_multiplier = (sum(m[0] * m[1] for m in mutation_data)/100) + no_mut
+    total_lure_speed = rod_speed + average_fish_prog_speed
+    total_xp = total_xp_multip * average_fish_xp
 
-        r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)**x - x
-        d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)**x - x
-        f_x = (6.8 / (1 + (total_lure_speed + 33*x))) * (78.5/80)**x - x
+    # Sympy solver logic
+    x = sp.symbols('x', real=True)
+    r_x = (6.8 / (1 + (total_lure_speed + (5 * x)) / 100)) * ((80-4*2*(0.5+0.8*x))/80)**x - x
+    d_x = (6.8 / (1 + ((total_lure_speed / 100)))) * (73.35/80)**x - x
+    f_x = (6.8 / (1 + (total_lure_speed + 33*x))) * (78.5/80)**x - x
+
+    def solve_safely(equation, symbol, guess=5.0):
+        try:
+            sol = sp.nsolve(equation, symbol, guess)
+            return float(sol)
+        except:
+            return 6.8 / ((total_lure_speed / 100) + 1) 
     
-        def solve_safely(equation, symbol, guess=5.0):
-            try:
-                sol = sp.nsolve(equation, symbol, guess)
-                return float(sol)
-            except Exception:
-                return 6.8 / ((total_lure_speed / 100) + 1) 
+    if passive_specification == "Ruinous":
+        time_to_catch_formula = solve_safely(r_x, x)
+    elif passive_specification == "Dreambreaker":
+        time_to_catch_formula = solve_safely(d_x, x)
+    elif passive_specification == "Fabulous":
+        time_to_catch_formula = solve_safely(f_x, x)
+    else:
+        time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
+
+    passives_exponent = 1.0
+    if passive_specification == "Ruinous": passives_exponent = ((0.15*(20/80))+(0.85))
+    elif passive_specification == "Wind Elemental": passives_exponent = (50/80)
+    elif passive_specification == "Luminescent": passives_exponent = ((0.15*(60/80)+(0.85)))
+    elif passive_specification == "Seraphic": passives_exponent = (40/80)
+    elif passive_specification == "Onirifalx": passives_exponent = ((50/80*0.3)+0.7)
+    elif passive_specification == "Dead Man's Rod": passives_exponent = (40/80)
+    elif passive_specification == "Plaguereaver": passives_exponent = (40/80)
         
-        if passive_specification == "Ruinous":
-            time_to_catch_formula = solve_safely(r_x, x)
-        elif passive_specification == "Dreambreaker":
-            time_to_catch_formula = solve_safely(d_x, x)
-        elif passive_specification == "Fabulous":
-            time_to_catch_formula = solve_safely(f_x, x)
-        else:
-            time_to_catch_formula = (6.8 / ((total_lure_speed / 100) + 1))
+    glitch = 2 if glitch_pot == "Yes" else 1
+
+    value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
+    time_to_catch = (time_to_catch_formula * passives_exponent) + 1.2 + 1 + lure_speed_calc
+    catches = time_given / time_to_catch
+    total_money_made = (average_fish_value * value_multiplier) * catches * glitch
+    average_fish_final_value = average_fish_value * value_multiplier
+    xp_final = total_xp * catches
+
+    st.divider()
+    st.metric(f"Total Money made with {specific_name}:" , f"{total_money_made:,.0f} C$")
+    st.write(f"**Total XP Made:** {xp_final:.2f}")
+    st.write(f"**Total Catches:** {catches:.1f}")
+    st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
+    st.write(f"**Average Fish Value:** {average_fish_final_value:.2f}")
     
-        # Passive exponents
-        if passive_specification == "Ruinous":
-            passives_exponent=((0.15*(20/80))+(0.85))
-        elif passive_specification == "Wind Elemental":
-            passives_exponent=(50/80)
-        elif passive_specification == "Luminescent":
-            passives_exponent=((0.15*(60/80)+(0.85)))
-        elif passive_specification == "Seraphic":
-            passives_exponent=(40/80)
-        elif passive_specification=="Onirifalx":
-            passives_exponent=((50/80*0.3)+0.7)
-        elif passive_specification=="Dead Man's Rod":
-            passives_exponent=(40/80)
-        elif passive_specification=="None":
-            passives_exponent=1
-        elif passive_specification=="Plaguereaver":
-            passives_exponent=(40/80)
-        elif passive_specification=="Dreambreaker":
-            passives_exponent=1
-        else:
-            passives_exponent=1
-            
-        # Final calculations
-        if glitch_pot ==  "Yes":
-             glitch = 2
-        else:
-             glitch = 1
+    if sum(f[0] for f in fish_data) > 100: st.warning("TOTAL FISH CHANCE EXCEEDS 100%")
+    if sum(m[0] for m in mutation_data) > 100: st.warning("TOTAL MUTATION CHANCE EXCEEDS 100%")
 
-        value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
-        time_to_catch = (time_to_catch_formula * passives_exponent) + 1.2 + 1 + lure_speed
-        catches = time_given / time_to_catch
-        total_money_made = (average_fish_value * value_multiplier) * catches * glitch
-        average_fish_final_value = average_fish_value * value_multiplier
-        xp_final = total_xp * catches
-
-        st.divider()
-        st.metric(f"Total Money made with {specific_name}:" , f"{total_money_made:,.0f} C$")
-        if passive_specification != "None":
-            st.write(f"({rod_name})")
-        st.write(f"**Total XP Made:** {xp_final:.2f}")
-        st.write(f"**Total Catches:** {catches:.1f}")
-        st.write(f"**Catch Speed:** {time_to_catch:.2f}s")
-        st.write(f"**Average Fish Value:** {average_fish_final_value:.2f}")
-        
-        if sum(f[0] for f in fish_data) > 100:
-             st.warning("**WARNING! THE TOTAL FISH CHANCE EXCEEDS 100%**")
-        if sum(m[0] for m in mutation_data) > 100:
-             st.warning("**WARNING! THE TOTAL MUTATION CHANCE EXCEEDS 100%**")
-
-        # Export to Excel
-        if passive_specification == "None":
-            export_data = {
-                "Column 1": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip"],
-                "Column 2": [specific_name, total_money_made, catches, time_given, time_to_catch, average_fish_final_value, value_multiplier]
-            }
-        else:
-            export_data = {
-                "Column 1": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "Time-to-catch", "AvgFishVal", "AvgFishValMultip", "Spec"],
-                "Column 2": [specific_name, total_money_made, catches, time_given, time_to_catch, average_fish_final_value, value_multiplier, rod_name]
-            }
-        df = pd.DataFrame(export_data)
-
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        
-        st.download_button(
-            label="Download Excel File",
-            data=buffer.getvalue(),
-            file_name="fischcalcbyze.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+    # Excel Export
+    export_data = {
+        "Stat": ["Rod","TotalMoney", "TotalCatches", "TimeGiven", "CatchSpeed", "AvgFishVal"],
+        "Value": [specific_name, total_money_made, catches, time_given, time_to_catch, average_fish_final_value]
+    }
+    df = pd.DataFrame(export_data)
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False)
+    
+    st.download_button(label="Download Excel File", data=buffer.getvalue(), file_name="fischcalc.xlsx")
