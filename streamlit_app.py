@@ -43,9 +43,6 @@ def fetch_fish_stats(fish_name):
     return 0.0, 0.0
 
 # --- UI LAYOUT ---
-st.title("A Simple Fisch Moneymaking Calc")
-st.caption("by @ze_button on discord")
-
 with st.sidebar:
     st.header("Specifications")
     time_given = st.number_input("Time (seconds)", value=750)
