@@ -139,7 +139,7 @@ if run_calc:
         else:
              glitch = 1
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
-        time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1 + lure_speed
+        time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1.5 + lure_speed
         catches = time_given / time_to_catch
         total_money_made = (average_fish_value * value_multiplier) * catches * glitch
         average_fish_final_value = average_fish_value * value_multiplier
