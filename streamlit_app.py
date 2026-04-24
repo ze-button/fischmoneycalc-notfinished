@@ -79,7 +79,7 @@ if run_calc:
 
         total_xp_multip = xp_multi1 * xp_multi2 * xp_multi3 * xp_multi4
 
-        no_mut = 100 - (sum(m[0] for m in mutation_data))/100
+        no_mut = (100 - (sum(m[0] for m in mutation_data)))/100
     
         average_fish_value = sum(f[0] * f[1] for f in fish_data)/100
         average_fish_prog_speed = sum(f[0] * f[2] for f in fish_data)/100
