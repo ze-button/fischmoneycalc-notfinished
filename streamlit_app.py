@@ -22,7 +22,7 @@ with st.sidebar:
     )
     passive_specification = st.selectbox(
         "Rod Passive (WIP)",
-        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker"]
+        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","gb"]
     )
     rod_name = st.text_input("Rod Name")
     xp_multi1 = st.number_input("XP Multiplier 1",min_value=1)
@@ -116,6 +116,8 @@ if run_calc:
         #passivemulti
         if passive_specification == "Ruinous":
             passives_exponent=((0.15*(20/80))+(0.85))
+        elif passive_specification == "gb":
+            passives_exponent=((0.167*(8/80))+(0.833))
         elif passive_specification == "Wind Elemental":
             passives_exponent=(50/80)
         elif passive_specification == "Luminescent":
