@@ -16,13 +16,9 @@ with st.sidebar:
     lure_spd = st.number_input("Lure Speed", value=0)
     fish_count = st.number_input("Fish Count", value=3)
     mutation_count = st.number_input("Mutation Count", value=3)
-    glitch_pot = st.selectbox(
-        "Glitch Potion?",
-        options=["Yes","No"]
-    )
     passive_specification = st.selectbox(
-        "Rod Passive (WIP)",
-        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","gb"]
+        "Rod Passive",
+        options=["None", "Dead Man's Rod", "Ruinous", "Onirifalx","Luminescent","Seraphic","Wind Elemental","Plaguereaver","Dreambreaker","Crowbar"]
     )
     rod_name = st.text_input("Rod Name")
     xp_multi1 = st.number_input("XP Multiplier 1",min_value=1)
@@ -116,8 +112,8 @@ if run_calc:
         #passivemulti
         if passive_specification == "Ruinous":
             passives_exponent=((0.15*(20/80))+(0.85))
-        elif passive_specification == "gb":
-            passives_exponent=((0.167*(8/80))+(0.833))
+        elif passive_specification == "Crowbar":
+            passives_exponent=(48/80)
         elif passive_specification == "Wind Elemental":
             passives_exponent=(50/80)
         elif passive_specification == "Luminescent":
@@ -136,14 +132,10 @@ if run_calc:
             passives_exponent=1
             
         #finalstuff
-        if glitch_pot ==  "Yes":
-             glitch = 2
-        else:
-             glitch = 1
         value_multiplier = average_mutation_multiplier * size_multiplier * shiny_chance_final * sparkling_chance_final
         time_to_catch = (time_to_catch_formula*passives_exponent)+ 1.2 + 1.5 + lure_speed
         catches = time_given / time_to_catch
-        total_money_made = (average_fish_value * value_multiplier) * catches * glitch
+        total_money_made = (average_fish_value * value_multiplier) * catches
         average_fish_final_value = average_fish_value * value_multiplier
         xp_final = total_xp * catches
         st.divider()
@@ -184,4 +176,3 @@ if run_calc:
             data=buffer.getvalue(),
             file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
