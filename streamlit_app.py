@@ -176,3 +176,4 @@ if run_calc:
             data=buffer.getvalue(),
             file_name="fischcalcbyze.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
